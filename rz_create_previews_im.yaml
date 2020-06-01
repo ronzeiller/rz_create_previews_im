@@ -1,0 +1,5 @@
+name    : rz_create_previews_im
+author  : Ronnie Zeiller.eu
+version : 0.1
+desc    : Creates Previews with ImageMagick version >= 7, replaces RS function create_previews_using_im()
+category: Asset Processing
