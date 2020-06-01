@@ -23,5 +23,13 @@ magick convert 'original.tif'[0] -quiet -depth 8 -flatten  -resize 3000x2000">" 
 -resize 175x175">" -write mpr:121 -delete 1 -profile original.tif.icc -intent perceptual -black-point-compensation -profile /iccprofiles/sRGB.icc -type truecolor -strip  -quality 90 -write 'thm.jpg' 
 -resize 100x75">" -write mpr:121 -delete 1 -profile original.tif.icc -intent perceptual -black-point-compensation -profile /iccprofiles/sRGB.icc -type truecolor -strip  'col.jpg'
 
+### Important notice
+Hopefully the core will be changed soon, but may be you still need to add 'if ( !function_exists('create_previews_using_im') ) {' and an ending '}' to the core in include/image_processing.php at around line 1356 (RS 9.2)
+
+if ( !function_exists('create_previews_using_im') ) {
+function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previewonly=false,$previewbased=false,$alternative=-1,$ingested=false,$onlysizes = array()) {
+  // leaf everything unchanged
+}
+} // end function_exists()
 
 
