@@ -1,19 +1,27 @@
-# Resourcespace Plugin rz_create_previews_im
+# Resourcespace Plugin rz_create_previews_im is used for converting images to archive into proper download images
 
-## The task is to achive 1c images with embedded ICC profiles in the sizes HPR and LPR in 1c,
-## convert all other sizes into sRGB, with embedding ICC profiles in the sizes SCR and PRE.
+4c images will be converted to an output profile (most common sRGB) for the preview sizes, but Resourcespace does not take care what the source profile is, so it will deceive wrong colors and wrong gamma if source- and output profiles differ in gamma.
 
-The plugin is for ImageMagick >= 6.9
+1c (greyscale) images won´t be converted to RGB by Resourcespace. This will matter, when you download LPR (Low printing format) and screen sizes, especially if you have printing profiles embedded in the source images and/or you want to use downloaded images in non color managed environment.
+
+## What this Plugin is doing: 
+- embeds source ICC profiles in the sizes HPR and LPR
+- convert all other preview sizes into the output profile (acording config)
+- embeds output profile into the sizes SCR and PRE
+
+### The plugin is tested with:
+- ImageMagick versions >= 6.9
+- Resourcespace version 9.2
 –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 
-### Normal magick command to do so would be:
+### Normal magick command would be:
 
 magick -verbose original.tif[0] -quiet -depth 8 -flatten  -resize 3000x2000 -profile original.tif.icc -intent perceptual -black-point-compensation -profile /iccprofiles/sRGB_IEC61966-2-1_black_scaled.icc -quality 90 -type truecolor  out.jpg
 
 
 ### The Resourcespace command within this Plugin will be something like:
 
-In Resourcespace, when Imagemagick is used the command is built this way, that the original input file gets resized and converted for each preview size.
+In Resourcespace, when Imagemagick is used, the command is built this way, that the original input file gets resized for each preview size and then get color converted to the preview images.
 
 ** Simplified CLI command **
 
